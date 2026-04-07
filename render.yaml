@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ma9onnova-site
+    name: maconnova-site
     env: node
     plan: free
     branch: main

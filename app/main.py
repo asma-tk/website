@@ -4,12 +4,10 @@ import os
 import smtplib
 from datetime import datetime
 from email.message import EmailMessage
-from pathlib import Path
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
@@ -200,16 +198,3 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         connected_clients.discard(websocket)
 
-
-public_candidates = [
-    Path("public"),
-    Path(__file__).resolve().parent / "public",
-    Path(__file__).resolve().parent.parent / "public",
-]
-
-public_dir = next((path for path in public_candidates if path.is_dir()), None)
-
-if public_dir:
-    app.mount("/", StaticFiles(directory=str(public_dir), html=True), name="static")
-else:
-    logger.warning("Dossier static introuvable; montage '/' ignoré")

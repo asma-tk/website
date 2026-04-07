@@ -20,9 +20,6 @@
       "dest": "/api/contact.js"
     },
     {
-      "handle": "filesystem"
-    },
-    {
       "src": "/",
       "dest": "/public/index.html"
     },

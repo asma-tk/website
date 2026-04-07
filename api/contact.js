@@ -1,5 +1,3 @@
-const nodemailer = require("nodemailer");
-
 function validatePayload(payload) {
   const { nom, email, message } = payload || {};
   const errors = [];
@@ -20,6 +18,18 @@ function validatePayload(payload) {
 }
 
 function getTransport() {
+  let nodemailer = null;
+  try {
+    nodemailer = require("nodemailer");
+  } catch (error) {
+    console.error("❌ nodemailer introuvable:", error.message);
+    return {
+      transporter: null,
+      fromAddress: process.env.CONTACT_FROM || "no-reply@maconova.local",
+      provider: "sandbox",
+    };
+  }
+
   const brevoUser = process.env.BREVO_SMTP_USER || process.env.SMTP_USER;
   const brevoPass = process.env.BREVO_SMTP_PASS || process.env.SMTP_PASS;
   const gmailUser = process.env.GMAIL_USER;
@@ -66,63 +76,99 @@ function getTransport() {
   };
 }
 
-module.exports = async (req, res) => {
-  if (req.method !== "POST") {
-    return res.status(405).json({ ok: false, error: "Method Not Allowed" });
+function normalizePayload(body) {
+  if (!body) {
+    return {};
   }
 
-  const payload = req.body || {};
-  const errors = validatePayload(payload);
-
-  if (errors.length > 0) {
-    return res.status(400).json({ ok: false, errors });
+  if (typeof body === "string") {
+    try {
+      return JSON.parse(body);
+    } catch {
+      return {};
+    }
   }
 
-  const { nom, email, telephone, message } = payload;
-  const toAddress = process.env.CONTACT_TO || "macon.novaa@gmail.com";
-  const { transporter, fromAddress, provider } = getTransport();
-
-  const mailOptions = {
-    from: fromAddress,
-    to: toAddress,
-    subject: `Nouvelle demande de devis - ${nom}`,
-    text: [
-      "Nouvelle demande de devis depuis le site ma9onNova.",
-      "",
-      `Nom: ${nom}`,
-      `Email: ${email}`,
-      `Téléphone: ${telephone || "Non renseigné"}`,
-      "",
-      "Message:",
-      message,
-    ].join("\n"),
-  };
-
-  if (!transporter) {
-    console.log("🔐 MODE SANDBOX - pas de SMTP configuré");
-    console.log(`📧 Email vers: ${toAddress}`);
-    console.log(`📝 Sujet: ${mailOptions.subject}`);
-
-    return res.status(200).json({
-      ok: true,
-      message: "Demande reçue (mode sandbox - pas d'envoi réel).",
-    });
+  if (typeof body === "object") {
+    return body;
   }
 
+  return {};
+}
+
+const handler = async (req, res) => {
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ Email envoyé via ${provider}: ${info.response || info.messageId}`);
+    if (req.method === "OPTIONS") {
+      return res.status(200).json({ ok: true });
+    }
 
-    return res.status(200).json({
-      ok: true,
-      message: "Demande envoyée avec succès.",
-    });
+    if (req.method !== "POST") {
+      return res.status(405).json({ ok: false, error: "Method Not Allowed" });
+    }
+
+    const payload = normalizePayload(req.body);
+    const errors = validatePayload(payload);
+
+    if (errors.length > 0) {
+      return res.status(400).json({ ok: false, errors });
+    }
+
+    const { nom, email, telephone, message } = payload;
+    const toAddress = process.env.CONTACT_TO || "macon.novaa@gmail.com";
+    const { transporter, fromAddress, provider } = getTransport();
+
+    const mailOptions = {
+      from: fromAddress,
+      to: toAddress,
+      subject: `Nouvelle demande de devis - ${nom}`,
+      text: [
+        "Nouvelle demande de devis depuis le site ma9onNova.",
+        "",
+        `Nom: ${nom}`,
+        `Email: ${email}`,
+        `Téléphone: ${telephone || "Non renseigné"}`,
+        "",
+        "Message:",
+        message,
+      ].join("\n"),
+    };
+
+    if (!transporter) {
+      console.log("🔐 MODE SANDBOX - pas de SMTP configuré");
+      console.log(`📧 Email vers: ${toAddress}`);
+      console.log(`📝 Sujet: ${mailOptions.subject}`);
+
+      return res.status(200).json({
+        ok: true,
+        message: "Demande reçue (mode sandbox - pas d'envoi réel).",
+      });
+    }
+
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      console.log(`✅ Email envoyé via ${provider}: ${info.response || info.messageId}`);
+
+      return res.status(200).json({
+        ok: true,
+        message: "Demande envoyée avec succès.",
+      });
+    } catch (error) {
+      console.error(`❌ Erreur d'envoi email: ${error.message}`);
+      return res.status(500).json({
+        ok: false,
+        error: "Envoi email échoué.",
+        details: error.message,
+      });
+    }
   } catch (error) {
-    console.error(`❌ Erreur d'envoi email: ${error.message}`);
+    console.error("❌ Crash api/contact:", error);
     return res.status(500).json({
       ok: false,
-      error: "Envoi email échoué.",
-      details: error.message,
+      error: "Erreur interne serveur.",
+      details: error?.message || "Unknown error",
     });
   }
 };
+
+module.exports = handler;
+module.exports.default = handler;

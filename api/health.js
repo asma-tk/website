@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+const handler = (req, res) => {
   if (req.method !== "GET") {
     return res.status(405).json({ ok: false, error: "Method Not Allowed" });
   }
@@ -9,3 +9,6 @@ module.exports = (req, res) => {
     now: new Date().toISOString(),
   });
 };
+
+module.exports = handler;
+module.exports.default = handler;

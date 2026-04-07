@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>maçonNova Bâtiment | Maçonnerie & Construction</title>
+    <meta
+      name="description"
+      content="maçonNova Bâtiment, experts en maçonnerie générale, rénovation et gros œuvre. Demandez votre devis rapide."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav">
+        <a href="#" class="brand" aria-label="Accueil maçonNova Bâtiment">
+          <img src="/logo.svg" alt="Logo maçonNova Bâtiment" class="brand-logo" />
+        </a>
+        <div>
+          <a class="btn" href="#contact">Demander un devis</a>
+          <a class="btn btn-light" href="#phone-display">Contacter nous</a>
+        </div>
+      </nav>
+      <div class="hero-grid reveal">
+        <div class="hero-content">
+          <p class="badge">Entreprise locale de maçonnerie</p>
+          <h2>Construction solide, design moderne, chantier maîtrisé.</h2>
+          <p>
+            Nous réalisons vos projets de maçonnerie, extension, murs porteurs,
+            dalles, façades et rénovation complète avec un suivi transparent.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#contact">Contactez-nous pour un devis</a>
+            <a class="btn btn-light" href="#realisations">Voir nos réalisations</a>
+          </div>
+          <div class="hero-kpis">
+            <div><strong>+</strong><span>ans d'expérience</span></div>
+            <div><strong>400+</strong><span>projets livrés</span></div>
+            <div><strong>48h</strong><span>pour un devis</span></div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img src="/A9A.png" alt="Grande réalisation maçonNova Bâtiment" />
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section services reveal">
+        <h3>Nos services</h3>
+        <div class="cards">
+          <article class="card">
+            <h4>Gros œuvre</h4>
+            <p>Fondations, élévation des murs, planchers béton et structures durables.</p>
+          </article>
+          <article class="card">
+            <h4>Rénovation</h4>
+            <p>Ouverture de murs porteurs, reprise de maçonnerie, consolidation.</p>
+          </article>
+          <article class="card">
+            <h4>Aménagement extérieur</h4>
+            <p>Murets, escaliers, terrasses, clôtures et habillages de façade.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section gallery reveal" id="realisations">
+        <h3>Réalisations</h3>
+        <div class="images">
+          <img src="/A1A.png" alt="Chantier maçonnerie 1" class="large" />
+          <img src="/A3.png" alt="Chantier maçonnerie 2" />
+          <img src="/A4.png" alt="Chantier maçonnerie 3" />
+          <img src="/A9.png" alt="Chantier maçonnerie 4" class="large" />
+        </div>
+      </section>
+
+      <section class="section live-status reveal">
+        <h3>Statut en direct</h3>
+        <p id="ws-status" class="status">Connexion au flux en cours...</p>
+      </section>
+
+      <section class="section contact reveal" id="contact">
+        <h3>Contactez-nous pour un devis</h3>
+        <form id="contact-form" novalidate>
+          <label>
+            Nom
+            <input type="text" name="nom" required minlength="2" />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            Téléphone
+            <input type="tel" name="telephone" placeholder="06 00 00 00 00" />
+          </label>
+          <label>
+            Message
+            <textarea
+              name="message"
+              required
+              minlength="10"
+              placeholder="Décrivez votre projet (surface, délai, localisation...)"
+            ></textarea>
+          </label>
+          <button type="submit" class="btn">Envoyer la demande</button>
+          <p id="form-feedback" class="feedback" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="phone-display" id="phone-display">
+        <p>Appelez-nous directement</p>
+        <a href="tel:0760794296">07 60 79 42 96</a>
+      </div>
+      <p>© <span id="year"></span> maçonNova Bâtiment - Tous droits réservés.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="emailjs-config.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

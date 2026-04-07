@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    container_name: ma9onnova-web
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    restart: unless-stopped

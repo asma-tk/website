@@ -87,6 +87,32 @@ docker run --rm -p 3000:3000 --env-file .env ma9onnova-web
 pytest
 ```
 
+## Déploiement Render (Node.js)
+
+Le dépôt contient un `server.js` Node/Express avec un endpoint santé `GET /api/health`.
+
+### Option 1 — One-click via Blueprint
+
+Le fichier `render.yaml` est déjà prêt.
+
+1. Aller sur Render → **New** → **Blueprint**.
+2. Connecter le repo `asma-tk/website`.
+3. Lancer le déploiement.
+
+### Option 2 — Configuration manuelle
+
+Créer un **Web Service** avec :
+
+- **Build Command**: `npm install`
+- **Start Command**: `npm start`
+- **Health Check Path**: `/api/health`
+
+Après déploiement, vérifier :
+
+```bash
+curl -s https://<ton-service>.onrender.com/api/health
+```
+
 ## Fonctionnement du formulaire
 
 - Le formulaire envoie les données vers `POST /api/contact`.

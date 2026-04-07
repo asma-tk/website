@@ -113,6 +113,50 @@ Après déploiement, vérifier :
 curl -s https://<ton-service>.onrender.com/api/health
 ```
 
+## Déploiement Netlify (Frontend + Functions)
+
+Le dépôt est prêt pour Netlify avec :
+
+- `public/` comme dossier statique
+- `netlify/functions/contact.js` pour `POST /api/contact`
+- `netlify/functions/health.js` pour `GET /api/health`
+- `netlify.toml` pour les redirections API
+
+### Configuration Netlify
+
+- **Build command**: *(laisser vide)*
+- **Publish directory**: `public`
+
+### Variables d'environnement (Site settings → Environment variables)
+
+Configurer au minimum :
+
+```dotenv
+CONTACT_TO=macon.novaa@gmail.com
+CONTACT_FROM=macon.novaa@gmail.com
+```
+
+Pour envoi réel SMTP (Brevo recommandé) :
+
+```dotenv
+BREVO_SMTP_HOST=smtp-relay.brevo.com
+BREVO_SMTP_PORT=587
+BREVO_SMTP_SECURE=false
+BREVO_SMTP_USER=VOTRE_USER_BREVO
+BREVO_SMTP_PASS=VOTRE_PASS_BREVO
+```
+
+Test après déploiement :
+
+```bash
+curl -s https://<votre-site-netlify>/api/health
+curl -X POST https://<votre-site-netlify>/api/contact \
+	-H "Content-Type: application/json" \
+	-d '{"nom":"Test","email":"test@example.com","telephone":"0600000000","message":"Message de test assez long"}'
+```
+
+Note : Netlify ne garde pas de serveur WebSocket permanent sur ce setup, le bloc “statut en direct” passe automatiquement en mode indisponible.
+
 ## Fonctionnement du formulaire
 
 - Le formulaire envoie les données vers `POST /api/contact`.

@@ -172,15 +172,15 @@ h3 {
 
 .images {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: -1.4rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem 0.8rem;
   align-items: start;
   padding: 0.4rem 0;
 }
 
 .images img {
   --xoffset: 0px;
-  width: min(99%, 700px);
+  width: min(100%, 560px);
   aspect-ratio: 1 / 1;
   height: auto;
   object-fit: cover;
@@ -203,12 +203,12 @@ h3 {
 }
 
 .images img:nth-child(odd) {
-  --xoffset: -36px;
+  --xoffset: -14px;
   justify-self: start;
 }
 
 .images img:nth-child(even) {
-  --xoffset: 36px;
+  --xoffset: 14px;
   justify-self: end;
 }
 
@@ -354,12 +354,16 @@ textarea {
     grid-template-columns: 1fr 1fr;
   }
 
+  .images {
+    grid-template-columns: 1fr;
+  }
+
   .images img:nth-child(odd) {
-    --xoffset: -18px;
+    --xoffset: -10px;
   }
 
   .images img:nth-child(even) {
-    --xoffset: 18px;
+    --xoffset: 10px;
   }
 }
 

@@ -172,50 +172,42 @@ h3 {
 
 .images {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.25rem 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
   align-items: start;
   padding: 0.4rem 0;
 }
 
+.gallery-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gallery-label {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 .images img {
-  --xoffset: 0px;
-  width: min(100%, 560px);
+  width: 100%;
   aspect-ratio: 1 / 1;
   height: auto;
   object-fit: cover;
-  clip-path: polygon(
-    25% 6%, /* top-left */
-    75% 6%,/* top-right */
-    100% 50%, /* right-middle */
-    75% 94%, /* bottom-right */
-    25% 94%,/* bottom-left */
-    0% 50% /* left-middle */
-  );
-  border: 2px solid var(--line);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.09);
-  transform: translateX(var(--xoffset));
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-.images img.large {
-  aspect-ratio: 1 / 1;
-}
-
-.images img:nth-child(odd) {
-  --xoffset: -14px;
-  justify-self: start;
-}
-
-.images img:nth-child(even) {
-  --xoffset: 14px;
-  justify-self: end;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .images img:hover {
-  transform: translateX(var(--xoffset)) scale(1.03);
-  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.14);
-  border-color: #fdba74;
+  transform: scale(1.04);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+  border-color: var(--accent);
 }
 
 .live-status .status {
@@ -346,24 +338,8 @@ textarea {
 }
 
 @media (max-width: 920px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-kpis {
-    grid-template-columns: 1fr 1fr;
-  }
-
   .images {
     grid-template-columns: 1fr;
-  }
-
-  .images img:nth-child(odd) {
-    --xoffset: -10px;
-  }
-
-  .images img:nth-child(even) {
-    --xoffset: 10px;
   }
 }
 

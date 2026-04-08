@@ -391,19 +391,261 @@ textarea {
 }
 
 @media (max-width: 920px) {
-  .images {
+  .hero-grid {
     grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .images {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .carousel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .carousel-section {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .carousel-item img {
+    border-radius: 12px;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 680px) {
+  body {
+    font-size: 15px;
+  }
+
+  .hero {
+    padding: 0.8rem 1rem 2.5rem;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 0.8rem;
+    width: min(100%, 95%);
+  }
+
+  .brand-logo {
+    width: clamp(140px, 25vw, 200px);
+  }
+
+  .hero-grid {
+    margin-top: 1.2rem;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin: 0 0 0.6rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    margin: 0 0 0.9rem;
+  }
+
   .hero-kpis {
     grid-template-columns: 1fr;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .hero-kpis div {
+    padding: 0.6rem;
+  }
+
+  .hero-kpis strong {
+    font-size: 1.1rem;
+  }
+
+  .hero-kpis span {
+    font-size: 0.8rem;
+  }
+
+  .hero-actions {
+    gap: 0.6rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .section {
+    margin: 2rem auto;
+    width: min(100%, 95%);
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .carousel-section {
+    padding: 1.2rem;
+    margin: 1.2rem 0;
+    border-radius: 14px;
+  }
+
+  .carousel-title {
+    font-size: 1rem;
+    margin: 0 0 1rem;
+  }
+
+  .carousel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    max-width: 100%;
+  }
+
+  .carousel-item {
+    gap: 0.4rem;
+  }
+
+  .carousel-label {
+    font-size: 0.8rem;
+  }
+
+  .carousel-item img {
+    border-radius: 10px;
+  }
+
+  .images {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.8rem;
   }
 
   .images img {
-    width: min(98%, 580px);
-    --xoffset: 0px;
-    justify-self: center;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+
+  .contact form {
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+
+  .btn {
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  label {
+    gap: 0.3rem;
+    font-size: 0.9rem;
+  }
+
+  input,
+  textarea {
+    padding: 0.65rem;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  textarea {
+    min-height: 110px;
+  }
+
+  .phone-display {
+    padding: 0.9rem;
+    margin-top: 0.8rem;
+    border-radius: 12px;
+  }
+
+  .phone-display a {
+    font-size: 1rem;
+  }
+
+  .footer {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 0.6rem 0.8rem 2rem;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .nav div {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .nav .btn {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .brand-logo {
+    width: clamp(120px, 22vw, 160px);
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  .section {
+    margin: 1.5rem auto;
+  }
+
+  .carousel {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .carousel-item {
+    align-items: stretch;
+  }
+
+  .carousel-label {
+    text-align: center;
+  }
+
+  .images {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.6rem;
+  }
+
+  .contact form {
+    padding: 0.9rem;
+  }
+
+  input,
+  textarea {
+    padding: 0.6rem;
+  }
+
+  textarea {
+    min-height: 100px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.7rem;
+    text-align: center;
   }
 }

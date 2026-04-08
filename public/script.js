@@ -13,51 +13,18 @@ if (emailJsConfig.enabled && window.emailjs?.init) {
   });
 }
 
-let wsRetryCount = 0;
-const maxWsRetries = 5;
+// WebSocket connection disabled (live status section removed)
+// let wsRetryCount = 0;
+// const maxWsRetries = 5;
 
-function connectWebSocket() {
-  const protocol = window.location.protocol === "https:" ? "wss" : "ws";
-  const wsUrl = `${protocol}://${window.location.host}`;
-  const socket = new WebSocket(wsUrl);
+// function connectWebSocket() {
+//   const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+//   const wsUrl = `${protocol}://${window.location.host}`;
+//   const socket = new WebSocket(wsUrl);
+//   ...
+// }
 
-  socket.addEventListener("open", () => {
-    wsRetryCount = 0;
-    wsStatusNode.textContent = "Connecté au flux chantier en direct.";
-  });
-
-  socket.addEventListener("message", (event) => {
-    try {
-      const data = JSON.parse(event.data);
-      if (data.type === "site_status") {
-        wsStatusNode.textContent = `${data.payload.text} (${new Date(
-          data.payload.updatedAt
-        ).toLocaleTimeString("fr-FR")})`;
-      }
-      if (data.type === "new_quote_request") {
-        wsStatusNode.textContent = `Nouvelle demande de devis reçue à ${new Date(
-          data.payload.receivedAt
-        ).toLocaleTimeString("fr-FR")}.`;
-      }
-    } catch {
-      wsStatusNode.textContent = "Mise à jour en direct reçue.";
-    }
-  });
-
-  socket.addEventListener("close", () => {
-    wsRetryCount += 1;
-
-    if (wsRetryCount > maxWsRetries) {
-      wsStatusNode.textContent = "Flux direct indisponible sur cet hébergement.";
-      return;
-    }
-
-    wsStatusNode.textContent = "Connexion interrompue. Reconnexion...";
-    setTimeout(connectWebSocket, 3000);
-  });
-}
-
-connectWebSocket();
+// connectWebSocket();
 
 const revealNodes = document.querySelectorAll(".reveal");
 
